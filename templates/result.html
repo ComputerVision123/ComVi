@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result</title>
+    <title>Goal Line Detection - Result</title>
 </head>
 <body>
-    <h1>골라인 판독 결과</h1>
-    <div>
-        <h2>결과 이미지:</h2>
-        <img src="{{ result_image }}" alt="Processed Image">
-    </div>
-    <div>
-        <a href="/">다시 분석하기</a>
-    </div>
+    <h1>Detection Result</h1>
+    <!-- 항상 같은 파일 경로를 참조 -->
+    <img id="resultImage" src="http://127.0.0.1:5000/uploads/result.jpg" 
+         alt="Detection result" 
+         style="max-width: 100%; max-height: 400px;" />
 </body>
 </html>
