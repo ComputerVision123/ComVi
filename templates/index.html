@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goal Line Detection</title>
+    <title>Goal Line Detection - Upload</title>
 </head>
 <body>
     <h1>Goal Line Detection</h1>
@@ -11,18 +11,21 @@
         <input type="file" id="imageInput" name="image" accept="image/*" required />
         <button type="submit">Upload</button>
     </form>
-    <h2>Detection Result</h2>
-    <img id="resultImage" alt="Detection result will appear here" style="max-width: 100%; max-height: 400px;" />
+
+    <!-- 항상 표시되는 결과 보기 버튼 -->
+    <button id="viewResultButton">View Result</button>
 
     <script>
-        // 폼 제출 이벤트 핸들러
         const form = document.getElementById('uploadForm');
+        const viewResultButton = document.getElementById('viewResultButton');
+
+        // 이미지 업로드 처리
         form.addEventListener('submit', async (e) => {
             e.preventDefault(); // 기본 제출 동작 방지
 
             const formData = new FormData();
             const imageInput = document.getElementById('imageInput');
-            formData.append('image', imageInput.files[0]); // 업로드된 파일 추가
+            formData.append('image', imageInput.files[0]);
 
             try {
                 // 서버에 POST 요청 보내기
@@ -31,23 +34,23 @@
                     body: formData
                 });
 
-                // 응답 상태 코드와 데이터 출력
-                console.log("응답 상태 코드:", response.status);
-                const data = await response.json(); // JSON 응답 파싱
-                console.log("응답 데이터:", data);
+                const data = await response.json();
 
-                // 응답 데이터 처리
-                if (response.ok && data.image) {
-                    const resultImage = document.getElementById('resultImage');
-                    resultImage.src = `data:image/jpeg;base64,${data.image}`;
+                if (response.ok && data.image_url) {
+                    alert("Image uploaded and processed successfully!");
                 } else {
-                    console.error("예측 실패:", data.error || "Unknown error");
-                    alert("Prediction failed!");
+                    alert("Prediction failed: " + (data.error || "Unknown error"));
                 }
             } catch (error) {
                 console.error("요청 처리 중 오류:", error);
                 alert("Something went wrong!");
             }
+        });
+
+        // 결과 보기 버튼 클릭 처리
+        viewResultButton.addEventListener('click', () => {
+            // 결과 페이지로 이동
+            window.location.href = `result.html`;
         });
     </script>
 </body>
